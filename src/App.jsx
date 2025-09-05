@@ -1,9 +1,10 @@
 import "./App.css";
-import {useState} from "react";
+
 import Data from "./components/Data.jsx";
+import {useSelector} from "react-redux";
 
 function App() {
-    const [theme, setTheme] = useState("default");
+    const theme= useSelector(state => state.theme);
     return (
         <div className={`app-shell ${theme}`}>
             <header className="app-header">
@@ -13,7 +14,7 @@ function App() {
 
             <main className="app-main">
                 <section className="panel">
-                    <Data setTheme={setTheme}/>
+                    <Data/>
                 </section>
             </main>
         </div>
