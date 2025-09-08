@@ -61,7 +61,7 @@ const Form = ({ getWeather }) => {
             <div className="search-row" ref={boxRef} style={{ position: "relative" }}>
                 <input
                     type="text"
-                    placeholder="Enter city / Введите город"
+                    placeholder="Enter city / Введіть місто"
                     value={query}
                     onChange={(e)=>{ setQuery(e.target.value); setOpen(true); }}
                     onFocus={()=> setOpen(suggestions.length > 0)}

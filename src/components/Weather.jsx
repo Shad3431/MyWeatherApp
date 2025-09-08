@@ -24,7 +24,7 @@ const Weather = ({ weather = {}, forecast = [] }) => {
                 <div className="current-main">
                     <div className="big-emoji">
                         {
-                            // Минимальная логика эмоджи — оставляем как было
+
                             weather.description?.toLowerCase().includes("дожд") ? "🌧️" :
                                 weather.description?.toLowerCase().includes("гроза") ? "⛈️" :
                                     weather.description?.toLowerCase().includes("снег")  ? "❄️" :

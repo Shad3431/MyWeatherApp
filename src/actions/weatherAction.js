@@ -1,4 +1,4 @@
-import {api_key, base_url, forecast_url, geocode_url} from "../utils/constants.js";
+
 
 export const SET_WEATHER = "SET_WEATHER";
 export const SET_FORECAST = "SET_FORECAST";
