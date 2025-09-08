@@ -2,10 +2,9 @@ import { createContext, useContext, useMemo, useState } from "react";
 
 const LanguageContext = createContext();
 
-const LOCALE_MAP = { uk: "uk-UA", en: "en-US", de: "de-DE" };     // для дат/времени
-const OWM_LANG   = { uk: "uk",    en: "en",    de: "de"   };      // ?lang= для OpenWeather
+const LOCALE_MAP = { uk: "uk-UA", en: "en-US", de: "de-DE" };
+const OWM_LANG   = { uk: "uk",    en: "en",    de: "de"   };
 
-// Минимальные тексты интерфейса
 const MESSAGES = {
     uk: {
         appTitle: "Weather application",
@@ -76,7 +75,7 @@ export function LanguageProvider({ children }) {
 
     return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }
-
+ // eslint-disable-next-line react-refresh/only-export-components
 export function useLanguage() {
     const ctx = useContext(LanguageContext);
     if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");

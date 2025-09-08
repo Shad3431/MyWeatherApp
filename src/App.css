@@ -188,8 +188,12 @@ html, body { max-width: 100%; overflow-x: hidden; }
 
 .app-shell.sunny{
     background:
-            radial-gradient(70% 70% at 15% 10%, rgba(255,220,0,.25) 0 35%, transparent 60%),
-            linear-gradient(180deg,#eaf7ff 0%,#fff7e6 100%);
+            radial-gradient(70% 70% at 15% 10%,
+            rgba(255,220,0,.25) 0%,
+            rgba(255,220,0,.25) 35%,
+            transparent 60%
+            ),
+            linear-gradient(180deg, #eaf7ff 0%, #fff7e6 100%);
 }
 .app-shell.sunny::after{
     width:clamp(90px,16vw,150px);
@@ -289,3 +293,23 @@ html, body { max-width: 100%; overflow-x: hidden; }
     94%{background:rgba(255,255,255,.55)}
     96%{background:rgba(255,255,255,.75)}
 }
+
+html, body { max-width: 100%; overflow-x: hidden; }
+
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (min-width: 768px) {
+    .metric-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1200px) {
+    .metric-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+
+.metric { max-width: 100%; }
+.panel, .card { overflow: hidden; }
