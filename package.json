@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -r https://github.com/Shad3431/MyWeatherApp.git"
+
   },
   "dependencies": {
     "bootstrap": "^5.3.8",

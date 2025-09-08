@@ -1,3 +1,4 @@
+html, body { max-width: 100%; overflow-x: hidden; }
 :root{
     --bg-a:#e7f3ff;
     --bg-b:#f7fbff;

@@ -1,3 +1,4 @@
+import { useLanguage } from "../i18n/LanguageContext.jsx";
 import React from "react";
 import Form from "./Form.jsx";
 import Weather from "./Weather.jsx";
@@ -83,6 +84,7 @@ const aggregateForecast = (list = []) => {
 
 const Data = () => {
     const dispatch = useDispatch();
+    const { owmLang } = useLanguage();
     const weatherInfo = useSelector(s => s.weather);
     const forecastDays = useSelector(s => s.forecast);
 
@@ -91,7 +93,7 @@ const Data = () => {
             let {lat, lon, label} = input;
 
             if ((lat == null || lon == null) && label) {
-                const gr = await fetch(`${geocode_url}?q=${encodeURIComponent(label)}&limit=1&appid=${api_key}`);
+                const gr = await fetch(`${geocode_url}?q=${encodeURIComponent(label)}&limit=1&appid=${api_key}&lang=${owmLang}`);
                 const g = await gr.json();
                 if (Array.isArray(g) && g[0]) {
                     lat = g[0].lat; lon = g[0].lon;
@@ -100,8 +102,8 @@ const Data = () => {
             }
 
             const curResp = (lat != null && lon != null)
-                ? await fetch(`${base_url}?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric&lang=ru`)
-                : await fetch(`${base_url}?q=${encodeURIComponent(label)}&appid=${api_key}&units=metric&lang=ru`);
+                ? await fetch(`${base_url}?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric&lang=${owmLang}`)
+                : await fetch(`${base_url}?q=${encodeURIComponent(label)}&appid=${api_key}&units=metric&lang=${owmLang}`);
 
             const cur = await curResp.json();
             if (cur.cod && Number(cur.cod) !== 200) {
@@ -112,10 +114,10 @@ const Data = () => {
             }
 
             const current = {
-                city: cur.name,
+                city: label,
                 country: cur.sys?.country || "",
                 temp: Math.round(cur.main?.temp),
-                feel_sLike: Math.round(cur.main?.feels_like),
+                feels_like: Math.round(cur.main?.feels_like),
                 main: cur.weather?.[0]?.main || "",
                 emoji: toEmoji(cur.weather?.[0]?.main),
                 description: cur.weather?.[0]?.description || "",
@@ -133,17 +135,18 @@ const Data = () => {
             dispatch(setTheme(toTheme(cur.weather?.[0]?.main)));
 
             const fResp = (lat != null && lon != null)
-                ? await fetch(`${forecast_url}?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric&lang=ru`)
-                : await fetch(`${forecast_url}?q=${encodeURIComponent(current.city)}&appid=${api_key}&units=metric&lang=ru`);
+                ? await fetch(`${forecast_url}?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric&lang=${owmLang}`)
+                : await fetch(`${forecast_url}?q=${encodeURIComponent(current.city)}&appid=${api_key}&units=metric&lang=${owmLang}`);
 
             const fj = await fResp.json();
             const days = Array.isArray(fj.list) ? aggregateForecast(fj.list) : [];
             dispatch(setForecast(days));
-        } catch (e) {
-            dispatch(setWeather({error: "Network error / Ошибка сети"}));
-            dispatch(setForecast([]));
-            dispatch(setTheme("default"));
-        }
+        }  catch (e) {
+        console.error(e);
+        dispatch(setWeather({error: "Network error / Ошибка сети"}));
+        dispatch(setForecast([]));
+        dispatch(setTheme("default"));
+    }
     };
 
     return (
